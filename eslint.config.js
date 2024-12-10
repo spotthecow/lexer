@@ -14,8 +14,5 @@ export default [
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",
     },
-    env: {
-      jest: "true",
-    },
   },
 ];
