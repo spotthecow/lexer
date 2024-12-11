@@ -32,6 +32,10 @@ export class Lexer {
     this.matchers = matchers;
   }
 
+  /* i dont necessarily like having the generator own the `LexerState`, but i dont
+  know how else to handle the case where a user might partially consume the generator,
+  then try to lex some different string */
+
   *lex(input: string): Generator<Token> {
     const state: LexerState = {
       row: -1,
@@ -69,6 +73,7 @@ export class Lexer {
             span,
           };
 
+          state.last_token = token;
           yield token;
           continue outer;
         }
@@ -85,6 +90,7 @@ export class Lexer {
         span,
       };
 
+      state.last_token = token;
       yield token;
       break;
     }
@@ -94,6 +100,7 @@ export class Lexer {
       text: "",
     };
 
+    state.last_token = token;
     yield token;
     return;
   }
